@@ -1,3 +1,5 @@
+import pandas as pd
+
 main_menu = ("1. Задание Классы\n ",
              "2. Задание Pandas\n ",
              "0. Выход")
@@ -45,6 +47,14 @@ def task1():
 
 
 def task2():
+    sales = pd.read_excel('test.xlsx', sheet_name='sales')
+    states = pd.read_excel('test1.xlsx', sheet_name='states')
+    print(sales.head())
+    print(states.head())
+    sales['MoreThan500'] = sales['Sales'] > 500
+    print(sales.head())
+    sales = pd.merge(sales, states, how='left', on='City')
+    print(sales.head())
     return
 
 
@@ -75,5 +85,3 @@ def menu():
 
 if __name__ == '__main__':
     menu()
-
-
