@@ -49,13 +49,22 @@ def task1():
 def task2():
     sales = pd.read_excel('test.xlsx', sheet_name='sales')
     states = pd.read_excel('test1.xlsx', sheet_name='states')
-    print(sales.head())
-    print(states.head())
+    print("Содержимое sales:", sales.head(), sep="\n")
+    print("Содержимое states:", states.head(), sep="\n")
     sales['MoreThan500'] = sales['Sales'] > 500
-    print(sales.head())
-    sales = pd.merge(sales, states, how='left', on='City')
-    print(sales.head())
-    return
+    print("Содержимое sales:", sales.head(), sep="\n")
+
+    sales["Period"] = pd.date_range(start="12.31.2003", end="02.12.2023", periods=6)
+    print("Содержимое колонки Period:", sales["Period"], sep="\n")
+
+    sales["Date"] = pd.to_datetime(sales["Date"], dayfirst=True)
+
+    print("Содержимое колонки Date:", sales["Date"], sep="\n")
+    sales["Month"] = pd.DatetimeIndex(sales["Date"], dayfirst=True).month
+    print("Содержимое колонки Month:", sales["Month"], sep="\n")
+
+    pd.merge(sales, states, how='left', on='City').to_excel('test2.xlsx')
+    print("Содержимое sales после объединения:", sales.head(), sep="\n")
 
 
 def menu():
